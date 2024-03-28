@@ -1,0 +1,53 @@
+.container-producto {
+  display: flex;
+  align-items: center; /* Alinea los items verticalmente en el centro */
+  justify-content: center; /* Centra los items horizontalmente */
+  flex-wrap: wrap; /* Permite que los items se pasen a la siguiente línea si no hay espacio */
+  gap: 20px; /* Espacio entre los items */
+}
+
+.container-producto img {
+  max-width: 35%; /* Máximo 35% del contenedor */
+  flex: 1; /* Permite que el elemento crezca */
+  margin: 10px;
+  padding: 10px;
+}
+
+.container-producto h1,
+.container-producto h5 {
+  flex: 2; /* Permite que estos elementos ocupen más espacio que la imagen */
+  margin: 10px;
+  padding: 10px;
+}
+@keyframes colorChangeH1 {
+  0%,
+  100% {
+    color: red;
+  }
+  50% {
+    color: #0d6efd;
+  }
+}
+
+@keyframes colorChangeH5 {
+  0%,
+  100% {
+    color: #0d6efd;
+  }
+  50% {
+    color: white;
+  }
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+  animation: colorChangeH1 10s infinite alternate;
+}
+
+h5 {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  animation: colorChangeH5 15s infinite alternate;
+}
