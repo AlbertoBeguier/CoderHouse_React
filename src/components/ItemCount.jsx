@@ -24,7 +24,6 @@ export function ItemCount() {
         -
       </button>
 
-      {/* Muestra el valor actual del contador */}
       <span>{count}</span>
 
       {/* Botón para incrementar */}
