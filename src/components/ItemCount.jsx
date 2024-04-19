@@ -31,9 +31,10 @@ export function ItemCount() {
       <button className="button-inc-dec" onClick={increment}>
         +
       </button>
-
-      {/* Botón para incrementar */}
-      <button className="button-inc-dec">Agregar al carrito</button>
+      <div>
+        {/* Botón para incrementar */}
+        <button className="button-inc-dec-1">Agregar al carrito</button>
+      </div>
     </>
   );
 }
