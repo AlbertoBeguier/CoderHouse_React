@@ -34,7 +34,11 @@ export function ItemCount({ product }) {
         +
       </button>
       <div>
-        <button className="button-inc-dec-1" onClick={addProductToCart}>
+        <button
+          className="button-inc-dec-1"
+          onClick={addProductToCart}
+          disabled={stock === 0}
+        >
           Agregar al carrito
         </button>
       </div>
