@@ -69,6 +69,7 @@ export const ItemDetailContainer = () => {
       />
       <h5>{product ? product.description : "No Description Available"}</h5>
       <span className="card-title">
+        <div className="span-stock">Stock: {product.stock}</div>
         <div className="span-price">Precio: $ {Number(product.price)}</div>
         <ItemCount product={product} />
         <Button variant="primary" onClick={goBack} className="mt-3">

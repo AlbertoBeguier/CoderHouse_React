@@ -33,7 +33,11 @@ export const ItemListContainer = () => {
         if (id) {
           data = data.filter(product => product.category === id);
         }
-        setProducts(data);
+        const productsWithStock = data.map(product => ({
+          ...product,
+          stock: product.stock,
+        }));
+        setProducts(productsWithStock);
         setLoading(false);
       })
       .catch(error => {

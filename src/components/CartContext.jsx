@@ -11,26 +11,46 @@ export const CartProvider = ({ children }) => {
     const newItems = items.map(item => {
       if (item.id === product.id) {
         found = true;
-        return { ...item, quantity: item.quantity + product.quantity };
+        // Disminuir el stock cuando se agrega un producto al carrito
+        return {
+          ...item,
+          quantity: item.quantity + product.quantity,
+          stock: item.stock - product.quantity,
+        };
       }
       return item;
     });
 
     if (!found) {
-      newItems.push(product);
+      newItems.push({ ...product, stock: product.stock - product.quantity });
     }
 
     setItems(newItems);
   };
 
   const removeItem = product => {
-    setItems(items.filter(p => p.id !== product.id));
+    setItems(
+      items
+        .map(item => {
+          if (item.id === product.id) {
+            // Aumentar el stock cuando se elimina un producto del carrito
+            return { ...item, stock: item.stock + item.quantity };
+          }
+          return item;
+        })
+        .filter(p => p.id !== product.id)
+    );
   };
 
   const clearCart = () => {
+    setItems(
+      items.map(item => {
+        // Aumentar el stock cuando se elimina un producto del carrito
+        return { ...item, stock: item.stock + item.quantity };
+      })
+    );
     setItems([]);
   };
-
   const itemCount = useMemo(
     () => items.reduce((total, item) => total + item.quantity, 0),
     [items]

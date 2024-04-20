@@ -13,7 +13,7 @@ export const ItemList = ({ products, title }) => {
       <Row>
         {products.map(product => (
           <Col key={product.id} sm={12} md={6} lg={4} className="mb-4">
-            <Item product={product} />
+            <Item key={product.id} product={product} />
           </Col>
         ))}
       </Row>

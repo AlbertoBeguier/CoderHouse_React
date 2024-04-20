@@ -17,6 +17,7 @@ export function Item({ product }) {
         <Card.Title className="card-title">{product.title}</Card.Title>
         <Card.Text as="div">
           <div className="card-price">Precio: $ {Number(product.price)}</div>
+          <div className="card-stock">Stock: {product.stock}</div>
           <br />
         </Card.Text>
         <div className="card-button-container">
@@ -42,5 +43,6 @@ Item.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    stock: PropTypes.number.isRequired,
   }).isRequired,
 };

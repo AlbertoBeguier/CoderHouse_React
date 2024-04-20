@@ -5,7 +5,7 @@ import { CartContext } from "./CartContext"; // Verifica que la ruta sea la corr
 export function ItemCount({ product }) {
   const { addItem } = useContext(CartContext); // Acceder a la función addItem del contexto
   const [count, setCount] = useState(1); // Estado local para manejar la cantidad del producto a añadir
-  let stock = 9; // Suponemos un stock fijo, pero esto podría ser dinámico según el producto
+  let stock = product.stock;
 
   const increment = () => {
     if (count < stock) {
@@ -47,5 +47,6 @@ ItemCount.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     pictureUrl: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
   }).isRequired,
 };
