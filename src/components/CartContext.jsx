@@ -1,31 +1,37 @@
 import { createContext, useState, useMemo } from "react";
 import PropTypes from "prop-types";
-
+import data from "../data/products.json";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
+  const [products, setProducts] = useState(data); // Nuevo estado para los productos
 
   const addItem = product => {
     let found = false;
     const newItems = items.map(item => {
       if (item.id === product.id) {
         found = true;
-        // Disminuir el stock cuando se agrega un producto al carrito
         return {
           ...item,
           quantity: item.quantity + product.quantity,
-          stock: item.stock - product.quantity,
         };
       }
       return item;
     });
 
     if (!found) {
-      newItems.push({ ...product, stock: product.stock - product.quantity });
+      newItems.push(product);
     }
 
     setItems(newItems);
+
+    // Disminuir el stock en el estado de los productos
+    setProducts(prevProducts =>
+      prevProducts.map(p =>
+        p.id === product.id ? { ...p, stock: p.stock - product.quantity } : p
+      )
+    );
   };
 
   const removeItem = product => {
@@ -33,24 +39,30 @@ export const CartProvider = ({ children }) => {
       items
         .map(item => {
           if (item.id === product.id) {
-            // Aumentar el stock cuando se elimina un producto del carrito
-            return { ...item, stock: item.stock + item.quantity };
+            return { ...item, quantity: item.quantity - product.quantity };
           }
           return item;
         })
         .filter(p => p.id !== product.id)
     );
+
+    // Aumentar el stock en el estado de los productos
+    setProducts(prevProducts =>
+      prevProducts.map(p =>
+        p.id === product.id ? { ...p, stock: p.stock + product.quantity } : p
+      )
+    );
   };
 
   const clearCart = () => {
-    setItems(
-      items.map(item => {
-        // Aumentar el stock cuando se elimina un producto del carrito
-        return { ...item, stock: item.stock + item.quantity };
-      })
-    );
     setItems([]);
+
+    // Restaurar el stock en el estado de los productos
+    setProducts(prevProducts =>
+      prevProducts.map(p => ({ ...p, stock: p.stock + p.quantity }))
+    );
   };
+
   const itemCount = useMemo(
     () => items.reduce((total, item) => total + item.quantity, 0),
     [items]
@@ -63,7 +75,15 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, clearCart, itemCount, total }}
+      value={{
+        items,
+        addItem,
+        removeItem,
+        clearCart,
+        itemCount,
+        total,
+        products,
+      }}
     >
       {children}
     </CartContext.Provider>

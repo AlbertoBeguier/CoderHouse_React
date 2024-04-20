@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { CartContext } from "./CartContext"; // Verifica que la ruta sea la correcta
 
 export function ItemCount({ product }) {
-  const { addItem } = useContext(CartContext); // Acceder a la función addItem del contexto
+  const { addItem, products } = useContext(CartContext); // Acceder a la función addItem y al estado products del contexto
   const [count, setCount] = useState(1); // Estado local para manejar la cantidad del producto a añadir
-  let stock = product.stock;
+  const productWithStock = products.find(p => p.id === product.id); // Obtener el producto con el stock actual
+  let stock = productWithStock ? productWithStock.stock : 0; // Usar el stock actual del producto
 
   const increment = () => {
     if (count < stock) {
