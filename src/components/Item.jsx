@@ -28,7 +28,7 @@ export function Item({ product }) {
         </div>
         <br />
         <div className="card-title">
-          <ItemCount />
+          <ItemCount product={product} />
         </div>{" "}
       </Card.Body>
     </Card>

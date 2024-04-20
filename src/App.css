@@ -60,3 +60,7 @@
   font-weight: 600;
   box-shadow: 1px 1px 3px rgb(206, 199, 199, 0.5);
 }
+.stock {
+  margin-bottom: 10px;
+  font-weight: 400;
+}

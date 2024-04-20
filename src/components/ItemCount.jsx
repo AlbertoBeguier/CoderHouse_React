@@ -1,39 +1,51 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import PropTypes from "prop-types";
+import { CartContext } from "./CartContext"; // Verifica que la ruta sea la correcta
 
-//! Variable que simula stock
-let stock = 9;
+export function ItemCount({ product }) {
+  const { addItem } = useContext(CartContext); // Acceder a la función addItem del contexto
+  const [count, setCount] = useState(1); // Estado local para manejar la cantidad del producto a añadir
+  let stock = 9; // Suponemos un stock fijo, pero esto podría ser dinámico según el producto
 
-export function ItemCount() {
-  // Inicializo el estado "count" con un valor de 1
-  const [count, setCount] = useState(1);
-
-  // Función para incrementar el contador, asegurando de que no sea mayor al stock
   const increment = () => {
-    setCount(count < stock ? count + 1 : count);
+    if (count < stock) {
+      setCount(count + 1); // Incrementar la cantidad mientras no se supere el stock
+    }
   };
 
-  // Función para decrementar el contador, asegurando de que no sea menor a 1
   const decrement = () => {
-    setCount(count > 1 ? count - 1 : count);
+    if (count > 1) {
+      setCount(count - 1); // Decrementar la cantidad pero no permitir menos de 1
+    }
+  };
+
+  const addProductToCart = () => {
+    addItem({ ...product, quantity: count }); // Utilizar addItem para agregar el producto con la cantidad seleccionada al carrito
   };
 
   return (
     <>
-      {/* Botón para decrementar */}
       <button className="button-inc-dec" onClick={decrement}>
         -
       </button>
-
       <span>{count}</span>
-
-      {/* Botón para incrementar */}
       <button className="button-inc-dec" onClick={increment}>
         +
       </button>
       <div>
-        {/* Botón para incrementar */}
-        <button className="button-inc-dec-1">Agregar al carrito</button>
+        <button className="button-inc-dec-1" onClick={addProductToCart}>
+          Agregar al carrito
+        </button>
       </div>
     </>
   );
 }
+
+ItemCount.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    pictureUrl: PropTypes.string.isRequired,
+  }).isRequired,
+};
