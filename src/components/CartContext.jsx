@@ -7,18 +7,20 @@ export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
 
   const addItem = product => {
-    const existingItem = items.find(item => item.id === product.id);
-    if (existingItem) {
-      setItems(
-        items.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + product.quantity }
-            : item
-        )
-      );
-    } else {
-      setItems(prevItems => [...prevItems, product]); // Asegúrate de que se usa una función para actualizar el estado basado en el previo
+    let found = false;
+    const newItems = items.map(item => {
+      if (item.id === product.id) {
+        found = true;
+        return { ...item, quantity: item.quantity + product.quantity };
+      }
+      return item;
+    });
+
+    if (!found) {
+      newItems.push(product);
     }
+
+    setItems(newItems);
   };
 
   const removeItem = product => {

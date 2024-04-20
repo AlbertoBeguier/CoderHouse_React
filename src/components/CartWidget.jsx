@@ -5,7 +5,7 @@ import cart from "../assets/cart.png";
 
 export const CartWidget = () => {
   const { itemCount } = useContext(CartContext);
-  let navigate = useNavigate(); // Hook para navegar
+  const navigate = useNavigate(); // Hook para navegar
 
   const goToCartPage = () => {
     navigate("/cart"); // Navegar a la página del carrito
