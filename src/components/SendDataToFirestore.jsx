@@ -1,6 +1,6 @@
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
-export const LoadDataToFirestore = () => {
+export const SendDataToFirestore = () => {
   const items = [
     {
       title: "Smart Tv Samsung 50 Un50cu7000gczb Led 4k",
@@ -125,7 +125,7 @@ export const LoadDataToFirestore = () => {
     },
   ];
 
-  const loadData = () => {
+  const sendData = () => {
     const db = getFirestore(); // Inicializamos la base de datos de Firestore
     items.forEach(item => {
       addDoc(collection(db, "items"), item)
@@ -141,7 +141,7 @@ export const LoadDataToFirestore = () => {
   return (
     <div>
       <h1>Cargar datos a Firestore</h1>
-      <button onClick={loadData}>Cargar Datos</button>
+      <button onClick={sendData}>Cargar Datos</button>
     </div>
   );
 };

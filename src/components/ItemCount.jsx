@@ -21,7 +21,8 @@ export function ItemCount({ product }) {
   };
 
   const addProductToCart = () => {
-    addItem({ ...product, quantity: count }); // Utilizar addItem para agregar el producto con la cantidad seleccionada al carrito
+    addItem({ ...product, quantity: count });
+    setCount(1); // Utilizar addItem para agregar el producto con la cantidad seleccionada al carrito
   };
 
   return (
