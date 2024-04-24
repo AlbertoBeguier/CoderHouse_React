@@ -47,7 +47,7 @@ export function Item({ product }) {
 Item.propTypes = {
   product: PropTypes.shape({
     pictureUrl: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,

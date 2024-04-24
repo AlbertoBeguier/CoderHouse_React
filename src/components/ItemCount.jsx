@@ -49,7 +49,7 @@ export function ItemCount({ product }) {
 
 ItemCount.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     pictureUrl: PropTypes.string.isRequired,

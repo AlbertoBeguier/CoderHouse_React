@@ -11,7 +11,11 @@ export const CartDisplay = () => {
   const goBack = () => {
     navigate(-1); // Use navigate(-1) para ir a la página anterior
   };
-
+  const handleClearCart = () => {
+    clearCart();
+    navigate("/"); // Asegúrate de cambiar esto a la ruta de la página a la que deseas ir
+    window.location.reload(); // Forzar una recarga completa de la página
+  };
   useEffect(() => {
     if (items.length === 0) {
       const timer =
@@ -59,7 +63,7 @@ export const CartDisplay = () => {
         <Button onClick={goBack} className="bot-elim-itm-2">
           Volver
         </Button>{" "}
-        <button className="bot-elim-itm-1" onClick={clearCart}>
+        <button className="bot-elim-itm-1" onClick={handleClearCart}>
           Vaciar Carrito
         </button>{" "}
       </div>

@@ -1,11 +1,38 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
-import data from "../data/products.json";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
+
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
-  const [products, setProducts] = useState(data); // Nuevo estado para los productos
+  const [products, setProducts] = useState([]); // Nuevo estado para los productos
+
+  useEffect(() => {
+    const db = getFirestore(); // Inicializamos la base de datos
+    const refCollection = collection(db, "items"); // Referencia a la colección completa de la BD
+
+    getDocs(refCollection)
+      .then(snapShot => {
+        if (snapShot.size === 0) {
+          console.log("No hay resultados");
+        } else {
+          let data = snapShot.docs.map(doc => {
+            return { id: doc.id, ...doc.data() };
+          });
+
+          const productsWithStock = data.map(product => ({
+            ...product,
+            stock: product.stock,
+          }));
+
+          setProducts(productsWithStock);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
   const addItem = product => {
     let found = false;
@@ -62,11 +89,9 @@ export const CartProvider = ({ children }) => {
       )
     );
   };
+
   const clearCart = () => {
     setItems([]);
-
-    // Restaurar el stock en el estado de los productos
-    setProducts(data); // Restablecer el estado de los productos a los datos originales
   };
 
   const itemCount = useMemo(

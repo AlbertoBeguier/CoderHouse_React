@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import { ItemCount } from "./ItemCount";
-import { useContext } from "react";
 import { CartContext } from "./CartContext";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import data from "../data/products.json";
 import "./ItemDetailContainer.css";
 
 export const ItemDetailContainer = () => {
@@ -16,33 +14,18 @@ export const ItemDetailContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Usar useNavigate en lugar de useHistory
   const { products } = useContext(CartContext);
-  const productWithStock = products.find(p => p.id === Number(id));
+  const productWithStock = products.find(p => p.id === id);
 
   useEffect(() => {
-    const getProduct = () => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const foundProduct = data.find(product => product.id === Number(id));
-          if (foundProduct) {
-            resolve(foundProduct);
-          } else {
-            reject("Producto no encontrado");
-          }
-        }, 2000);
-      });
-    };
-
-    getProduct()
-      .then(product => {
-        setProduct(product);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setError(error);
-        setLoading(false);
-      });
-  }, [id]);
+    setLoading(true);
+    const foundProduct = products.find(product => product.id === id);
+    if (foundProduct) {
+      setProduct(foundProduct);
+    } else {
+      setError("Producto no encontrado");
+    }
+    setLoading(false);
+  }, [id, products]);
 
   const goBack = () => {
     navigate(-1); // Use navigate(-1) para ir a la página anterior

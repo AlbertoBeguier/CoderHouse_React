@@ -3,7 +3,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useEffect, useState } from "react";
 import { ItemList } from "./ItemList";
 import { useParams } from "react-router-dom";
-import data from "../data/products.json";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 
 export const ItemListContainer = () => {
   const [products, setProducts] = useState([]); // Ajustado a un arreglo vacío
@@ -12,32 +12,34 @@ export const ItemListContainer = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // Establecer loading a true cada vez que id cambia asegura que el spinner se muestre durante la carga
     setLoading(true);
 
-    const getProducts = () => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const success = true;
-          if (success) {
-            resolve(data);
-          } else {
-            reject("Error al cargar los productos");
-          }
-        }, 2000);
-      });
-    };
+    const db = getFirestore(); // Inicializamos la base de datos
+    const refCollection = collection(db, "items"); // Referencia a la colección completa de la BD
 
-    getProducts()
-      .then(data => {
-        if (id) {
-          data = data.filter(product => product.category === id);
+    getDocs(refCollection)
+      .then(snapShot => {
+        if (snapShot.size === 0) {
+          console.log("No hay resultados");
+          setError(
+            "No se pudieron cargar los productos. Por favor, intenta de nuevo más tarde."
+          );
+        } else {
+          let data = snapShot.docs.map(doc => {
+            return { id: doc.id, ...doc.data() };
+          });
+
+          if (id) {
+            data = data.filter(product => product.category === id);
+          }
+
+          const productsWithStock = data.map(product => ({
+            ...product,
+            stock: product.stock,
+          }));
+
+          setProducts(productsWithStock);
         }
-        const productsWithStock = data.map(product => ({
-          ...product,
-          stock: product.stock,
-        }));
-        setProducts(productsWithStock);
         setLoading(false);
       })
       .catch(error => {
