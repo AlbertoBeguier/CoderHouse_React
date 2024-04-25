@@ -1,8 +1,4 @@
-# React + Vite
+Aplicación de carrito de compras, con características interactivas y dinámicas.
+Entre las funcionalidades clave se incluyen la capacidad de filtrar productos según diferentes criterios, gestionar el inventario de productos, y realizar operaciones en tiempo real a través de una conexión con una base de datos Firebase, esta conexión permite almacenar y recuperar datos.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para empezar a trabajar con esta aplicación y ver todas sus capacidades en acción, simplemente se debe ejecutar el comando yarn dev en la terminal. Esto prepara el ambiente de desarrollo, poniendo en marcha todas las funciones de la aplicación para que puedas interactuar con ellas directamente desde tu navegador.
