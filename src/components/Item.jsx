@@ -3,13 +3,12 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
-import { ItemCount } from "./ItemCount";
+
 import { Link } from "react-router-dom";
 
 export function Item({ product }) {
   const { products } = useContext(CartContext);
   const productWithStock = products.find(p => p.id === product.id);
-
   return (
     <Card style={{ width: "20rem" }}>
       <Card.Img
@@ -23,7 +22,11 @@ export function Item({ product }) {
         <Card.Text as="div">
           <div className="card-price">Precio: $ {Number(product.price)}</div>
           <div className="card-stock">
-            Stock: {productWithStock ? productWithStock.stock : "N/A"}
+            {productWithStock && productWithStock.stock > 0 ? (
+              `Stock: ${productWithStock.stock}`
+            ) : (
+              <span className="span-sin-stock">Sin Stock</span>
+            )}
           </div>
           <br />
         </Card.Text>
@@ -35,15 +38,10 @@ export function Item({ product }) {
           </Link>
         </div>
         <br />
-        <div className="card-title">
-          <ItemCount product={product} />
-        </div>{" "}
       </Card.Body>
     </Card>
   );
 }
-
-// Define las PropTypes para Item
 Item.propTypes = {
   product: PropTypes.shape({
     pictureUrl: PropTypes.string.isRequired,

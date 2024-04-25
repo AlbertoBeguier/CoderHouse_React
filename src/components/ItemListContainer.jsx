@@ -6,16 +6,15 @@ import { useParams } from "react-router-dom";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
 
 export const ItemListContainer = () => {
-  const [products, setProducts] = useState([]); // Ajustado a un arreglo vacío
-  const [loading, setLoading] = useState(true); // Nuevo estado para la carga
-  const [error, setError] = useState(""); // Nuevo estado para el error
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-
-    const db = getFirestore(); // Inicializamos la base de datos
-    const refCollection = collection(db, "items"); // Referencia a la colección completa de la BD
+    const db = getFirestore();
+    const refCollection = collection(db, "items");
 
     getDocs(refCollection)
       .then(snapShot => {
@@ -50,8 +49,6 @@ export const ItemListContainer = () => {
         setLoading(false);
       });
   }, [id]);
-
-  // Aquí ajusto la lógica para el título dinámico según si estoy en Home o en una categoría específica
   let title;
   if (!id) {
     title = "Todos los Productos";
@@ -65,7 +62,6 @@ export const ItemListContainer = () => {
         ? "Todos los Smartphones"
         : "Categoría no encontrada";
   }
-
   if (loading) {
     return (
       <Container
@@ -80,7 +76,6 @@ export const ItemListContainer = () => {
   if (error) {
     return <Container className="mt-4">{error}</Container>;
   }
-
   return (
     <Container className="mt-4">
       <ItemList products={products} title={title} />

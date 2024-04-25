@@ -19,8 +19,6 @@ export const ItemList = ({ products, title }) => {
     </Container>
   );
 };
-
-// Definición de PropTypes para ItemList
 ItemList.propTypes = {
   products: PropTypes.arrayOf(
     PropTypes.shape({

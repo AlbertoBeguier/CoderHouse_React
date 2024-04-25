@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
-import { getFirestore, collection, addDoc } from "firebase/firestore"; // Corregido "colection" a "collection"
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 
 const initialValues = {
@@ -9,13 +9,11 @@ const initialValues = {
   phone: "",
   email: "",
 };
-
 export const Cart = () => {
   const { items, total, removeItem, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [counter, setCounter] = useState(5);
   const [values, setValues] = useState(initialValues);
-
   const handleChange = event => {
     setValues({
       ...values,
@@ -26,33 +24,29 @@ export const Cart = () => {
   const goBack = () => {
     navigate(-1);
   };
-
   const handleClearCart = () => {
     clearCart();
     navigate("/");
     window.location.reload();
   };
-
   const handleSubmit = async () => {
     if (!values.name || !values.phone || !values.email) {
       alert("Por favor, llena todos los campos del formulario.");
       return;
     }
-
     const order = {
       buyer: values,
       items,
       total: total.toFixed(2),
     };
-
     const db = getFirestore();
     const orderCollection = collection(db, "orders");
     const docRef = await addDoc(orderCollection, order);
-    alert(`Felicitaciones por su compra. La 
-    orden de compra generada con éxito con ID: ${docRef.id}`);
+    alert(`        Felicitaciones por su compra.
+        La orden de compra fué generada con éxito.
+        ID: ${docRef.id}`);
     clearCart();
   };
-
   useEffect(() => {
     if (items.length === 0) {
       const timer =
@@ -62,7 +56,6 @@ export const Cart = () => {
       return () => clearTimeout(timer);
     }
   }, [items, counter, navigate]);
-
   if (items.length === 0) {
     return (
       <div>

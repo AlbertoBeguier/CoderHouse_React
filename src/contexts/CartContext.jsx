@@ -3,15 +3,12 @@ import PropTypes from "prop-types";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
 
 export const CartContext = createContext();
-
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
-  const [products, setProducts] = useState([]); // Nuevo estado para los productos
-
+  const [products, setProducts] = useState([]);
   useEffect(() => {
-    const db = getFirestore(); // Inicializamos la base de datos
-    const refCollection = collection(db, "items"); // Referencia a la colección completa de la BD
-
+    const db = getFirestore();
+    const refCollection = collection(db, "items");
     getDocs(refCollection)
       .then(snapShot => {
         if (snapShot.size === 0) {
@@ -20,12 +17,10 @@ export const CartProvider = ({ children }) => {
           let data = snapShot.docs.map(doc => {
             return { id: doc.id, ...doc.data() };
           });
-
           const productsWithStock = data.map(product => ({
             ...product,
             stock: product.stock,
           }));
-
           setProducts(productsWithStock);
         }
       })
@@ -33,7 +28,6 @@ export const CartProvider = ({ children }) => {
         console.error(error);
       });
   }, []);
-
   const addItem = product => {
     let found = false;
     const newItems = items.map(item => {
@@ -50,10 +44,7 @@ export const CartProvider = ({ children }) => {
     if (!found) {
       newItems.push(product);
     }
-
     setItems(newItems);
-
-    // Disminuir el stock en el estado de los productos
     setProducts(prevProducts =>
       prevProducts.map(p =>
         p.id === product.id ? { ...p, stock: p.stock - product.quantity } : p
@@ -68,19 +59,15 @@ export const CartProvider = ({ children }) => {
       );
 
       if (existingProduct.quantity > 1) {
-        // Si la cantidad del producto es mayor a 1, disminuir la cantidad en uno
         return prevItems.map(item =>
           item.id === productToRemove.id
             ? { ...item, quantity: item.quantity - 1 }
             : item
         );
       } else {
-        // Si la cantidad del producto es 1, eliminar el producto del carrito
         return prevItems.filter(item => item.id !== productToRemove.id);
       }
     });
-
-    // Aumentar el stock del producto en uno
     setProducts(prevProducts =>
       prevProducts.map(product =>
         product.id === productToRemove.id
@@ -89,21 +76,17 @@ export const CartProvider = ({ children }) => {
       )
     );
   };
-
   const clearCart = () => {
     setItems([]);
   };
-
   const itemCount = useMemo(
     () => items.reduce((total, item) => total + item.quantity, 0),
     [items]
   );
-
   const total = useMemo(
     () => items.reduce((total, item) => total + item.quantity * item.price, 0),
     [items]
   );
-
   return (
     <CartContext.Provider
       value={{
@@ -120,7 +103,6 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
-
 CartProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

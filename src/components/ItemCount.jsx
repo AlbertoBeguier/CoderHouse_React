@@ -1,30 +1,26 @@
 import { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { CartContext } from "../contexts/CartContext"; // Verifica que la ruta sea la correcta
+import { CartContext } from "../contexts/CartContext";
 
 export function ItemCount({ product }) {
-  const { addItem, products } = useContext(CartContext); // Acceder a la función addItem y al estado products del contexto
-  const [count, setCount] = useState(1); // Estado local para manejar la cantidad del producto a añadir
-  const productWithStock = products.find(p => p.id === product.id); // Obtener el producto con el stock actual
-  let stock = productWithStock ? productWithStock.stock : 0; // Usar el stock actual del producto
-
+  const { addItem, products } = useContext(CartContext);
+  const [count, setCount] = useState(1);
+  const productWithStock = products.find(p => p.id === product.id);
+  let stock = productWithStock ? productWithStock.stock : 0;
   const increment = () => {
     if (count < stock) {
-      setCount(count + 1); // Incrementar la cantidad mientras no se supere el stock
+      setCount(count + 1);
     }
   };
-
   const decrement = () => {
     if (count > 1) {
-      setCount(count - 1); // Decrementar la cantidad pero no permitir menos de 1
+      setCount(count - 1);
     }
   };
-
   const addProductToCart = () => {
     addItem({ ...product, quantity: count });
-    setCount(1); // Utilizar addItem para agregar el producto con la cantidad seleccionada al carrito
+    setCount(1);
   };
-
   return (
     <>
       <button className="button-inc-dec" onClick={decrement}>

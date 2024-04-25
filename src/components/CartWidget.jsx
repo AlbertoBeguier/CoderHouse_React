@@ -1,20 +1,19 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../contexts/CartContext"; // Verifica que la ruta sea correcta
+import { CartContext } from "../contexts/CartContext";
 import cart from "../assets/cart.png";
 
 export const CartWidget = () => {
   const { itemCount } = useContext(CartContext);
-  const navigate = useNavigate(); // Hook para navegar
-
+  const navigate = useNavigate();
   const goToCartPage = () => {
-    navigate("/cart"); // Navegar a la página del carrito
+    navigate("/cart");
   };
 
   return (
     <span
       style={{ display: "flex", alignItems: "center" }}
-      onClick={goToCartPage} // Usar la nueva función para navegar
+      onClick={goToCartPage}
     >
       <img
         src={cart}
