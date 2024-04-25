@@ -5,7 +5,6 @@ import { ItemCount } from "./ItemCount";
 import { CartContext } from "../contexts/CartContext";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import "./ItemDetailContainer.css";
 
 export const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);

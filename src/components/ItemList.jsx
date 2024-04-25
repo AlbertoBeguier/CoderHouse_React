@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Item } from "./Item";
 import { Container, Row, Col } from "react-bootstrap";
-import "./ItemList.css";
 
 export const ItemList = ({ products, title }) => {
   return (
