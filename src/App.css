@@ -115,6 +115,23 @@
   box-shadow: 1px 1px 3px white;
 }
 
+.bot-elim-itm-3 {
+  color: black;
+  background-color: white;
+  font-weight: 600;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(109, 107, 107, 0.5);
+}
+
+.bot-elim-itm-3:hover {
+  color: #0d6efd;
+  color: black;
+  font-weight: 600;
+  box-shadow: 1px 1px 3px white;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -144,4 +161,26 @@
   font-size: 1.3rem;
   font-weight: 600;
   color: #0d6efd;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.label-cart {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+}
+
+.tit-comp-cart {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin: 10px;
+  padding: 10px;
 }

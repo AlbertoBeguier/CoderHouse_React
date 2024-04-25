@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "./CartContext"; // Verifica que la ruta sea correcta
+import { CartContext } from "../contexts/CartContext"; // Verifica que la ruta sea correcta
 import cart from "../assets/cart.png";
 
 export const CartWidget = () => {

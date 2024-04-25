@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { CartContext } from "./CartContext"; // Verifica que la ruta sea la correcta
+import { CartContext } from "../contexts/CartContext"; // Verifica que la ruta sea la correcta
 
 export function ItemCount({ product }) {
   const { addItem, products } = useContext(CartContext); // Acceder a la función addItem y al estado products del contexto

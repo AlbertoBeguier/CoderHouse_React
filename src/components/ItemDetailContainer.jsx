@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import { ItemCount } from "./ItemCount";
-import { CartContext } from "./CartContext";
+import { CartContext } from "../contexts/CartContext";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import "./ItemDetailContainer.css";

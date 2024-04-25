@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useContext } from "react";
-import { CartContext } from "./CartContext";
+import { CartContext } from "../contexts/CartContext";
 import { ItemCount } from "./ItemCount";
 import { Link } from "react-router-dom";
 
